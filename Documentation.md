@@ -88,6 +88,7 @@
 ## B. Proposition d'architecture
 
 ### Schéma de base de données (MCD/ERD)
+![alt text](image.png)
 
 ### Liste des fonctionnalités MVP
 
