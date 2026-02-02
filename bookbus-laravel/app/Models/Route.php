@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Route extends Model
 {
+    protected $table = 'routes';
+    public $timestamps = false;
     protected $fillable = ['nom_trajet', 'adresse'];
     public function gares(){
         return $this->belongsToMany(Gare::class);

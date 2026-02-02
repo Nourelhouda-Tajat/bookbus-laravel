@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('tarif');
             $table->time('duree_estimee');
             $table->decimal('distance_km', 8, 2);
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

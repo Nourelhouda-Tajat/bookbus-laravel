@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('capacite');
             $table->time('heure_arrivee');
             $table->string('actif', 50);
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

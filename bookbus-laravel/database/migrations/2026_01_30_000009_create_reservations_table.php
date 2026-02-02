@@ -16,8 +16,8 @@ return new class extends Migration
             $table->date('date_reservation');
             $table->string('status', 50);
             $table->integer('seat_number');
-            $table->foreignId('utisateur_id')->constrained('utilisateurs')->onDelete('cascade');
-            // $table->timestamps();
+            $table->foreignId('utilisateur_id')->constrained('utilisateurs')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

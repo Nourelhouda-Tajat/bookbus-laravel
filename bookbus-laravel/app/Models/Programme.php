@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Programme extends Model
 {
+    protected $table = 'programmes';
+    public $timestamps = false;
     protected $fillable = ['bus_id', 'matricule', 'capacite', 'heure_arrivee', 'actif'];
     public function bus(){
         return $this->belongsToMany(Bus::class);

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Etape extends Model
 {
+    protected $table = 'etapes';
+    public $timestamps = false;
     protected $fillable = ['adresse'];
     public function routes(){
         return $this->belongsToMany(Route::class);

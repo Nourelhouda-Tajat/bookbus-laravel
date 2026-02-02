@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Segment extends Model
 {
+    protected $table = 'segments';
     protected $fillable = ['tarif', 'duree_estimee', 'distance_km'];
+    public $timestamps = false;
     public function programmes(){
         return $this->belongsToMany(Programme::class);
     }

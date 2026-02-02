@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom_trajet', 50);
             $table->string('adresse', 50);
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

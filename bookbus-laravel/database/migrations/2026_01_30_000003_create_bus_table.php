@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('matricule', 50)->unique();
             $table->integer('capacite');
             $table->string('status', 50);
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 
