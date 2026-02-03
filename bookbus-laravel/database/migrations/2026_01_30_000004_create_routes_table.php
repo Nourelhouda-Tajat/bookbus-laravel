@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_trajet', 50);
-            $table->string('adresse', 50);
-            $table->timestamps();
+            $table->string('nom_trajet', 100);
+            $table->string('description', 200)->nullable();
+            // $table->timestamps();
         });
     }
 

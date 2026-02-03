@@ -2,40 +2,83 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Programme;  
-use App\Models\Bus;  
+use App\Models\Programme;
+use App\Models\Bus;
+use App\Models\Route;
+use Carbon\Carbon;
 
 class ProgrammeSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
+        // Récupérer tous les bus actifs
         $bus = Bus::all();
+        
+        // Récupérer les routes par leur ID (plus simple)
+        $route1 = Route::find(1);  // Ligne 101: Casa-Marrakech
+        $route2 = Route::find(2);  // Ligne 102: Rabat-Fès
+        
+        // Vérifier que les données existent
+        if ($bus->isEmpty() || !$route1) {
+            $this->command->warn('Données manquantes');
+            return;
+        }
 
-        $programmes = [
-            ['bus_id' => $bus->random()->id, 'matricule' => 1001, 'capacite' => 50, 'heure_arrivee' => '10:00:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1002, 'capacite' => 45, 'heure_arrivee' => '11:30:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1003, 'capacite' => 55, 'heure_arrivee' => '13:00:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1004, 'capacite' => 50, 'heure_arrivee' => '14:30:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1005, 'capacite' => 40, 'heure_arrivee' => '16:00:00', 'actif' => 'non'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1006, 'capacite' => 50, 'heure_arrivee' => '17:30:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1007, 'capacite' => 45, 'heure_arrivee' => '19:00:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1008, 'capacite' => 55, 'heure_arrivee' => '20:30:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1009, 'capacite' => 50, 'heure_arrivee' => '22:00:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1010, 'capacite' => 60, 'heure_arrivee' => '23:30:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1011, 'capacite' => 50, 'heure_arrivee' => '06:00:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1012, 'capacite' => 45, 'heure_arrivee' => '07:30:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1013, 'capacite' => 50, 'heure_arrivee' => '09:00:00', 'actif' => 'non'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1014, 'capacite' => 55, 'heure_arrivee' => '12:00:00', 'actif' => 'oui'],
-            ['bus_id' => $bus->random()->id, 'matricule' => 1015, 'capacite' => 50, 'heure_arrivee' => '15:00:00', 'actif' => 'oui'],
-        ];
+        // Programme 1
+        Programme::create([
+            'bus_id' => 1,
+            'route_id' => 1,
+            'date_depart' => '2026-02-02',
+            'date_arrivee' => '2026-02-02',
+            'heure_depart' => '08:00:00',
+            'heure_arrivee' => '11:30:00',
+            'status' => 'planifie'
+        ]);
 
-        foreach ($programmes as $programme) {
-            Programme::create($programme);
+        // Programme 2
+        Programme::create([
+            'bus_id' => 2,
+            'route_id' => 1,
+            'date_depart' => '2026-02-02',
+            'date_arrivee' => '2026-02-02',
+            'heure_depart' => '14:00:00',
+            'heure_arrivee' => '17:30:00',
+            'status' => 'planifie'
+        ]);
+
+        // Programme 3
+        Programme::create([
+            'bus_id' => 3,
+            'route_id' => 1,
+            'date_depart' => '2026-02-03',
+            'date_arrivee' => '2026-02-03',
+            'heure_depart' => '06:00:00',
+            'heure_arrivee' => '09:30:00',
+            'status' => 'planifie'
+        ]);
+
+        // Programme 4 (Route 2 si elle existe)
+        if ($route2) {
+            Programme::create([
+                'bus_id' => 4,
+                'route_id' => 2,
+                'date_depart' => '2026-02-02',
+                'date_arrivee' => '2026-02-02',
+                'heure_depart' => '07:00:00',
+                'heure_arrivee' => '11:00:00',
+                'status' => 'planifie'
+            ]);
+
+            Programme::create([
+                'bus_id' => 5,
+                'route_id' => 2,
+                'date_depart' => '2026-02-02',
+                'date_arrivee' => '2026-02-02',
+                'heure_depart' => '15:00:00',
+                'heure_arrivee' => '19:00:00',
+                'status' => 'planifie'
+            ]);
         }
     }
 }

@@ -14,21 +14,16 @@ class RouteSeeder extends Seeder
     public function run(): void
     {
         $routes = [
-            ['nom_trajet' => 'Casablanca - Marrakech', 'adresse' => 'Route Nationale 9'],
-            ['nom_trajet' => 'Rabat - Fès', 'adresse' => 'Autoroute A2'],
-            ['nom_trajet' => 'Tanger - Tétouan', 'adresse' => 'Route Nationale 2'],
-            ['nom_trajet' => 'Agadir - Marrakech', 'adresse' => 'Route Nationale 8'],
-            ['nom_trajet' => 'Casablanca - Rabat', 'adresse' => 'Autoroute A1'],
-            ['nom_trajet' => 'Fès - Meknès', 'adresse' => 'Route Nationale 13'],
-            ['nom_trajet' => 'Marrakech - Essaouira', 'adresse' => 'Route Nationale 8'],
-            ['nom_trajet' => 'Oujda - Fès', 'adresse' => 'Route Nationale 6'],
-            ['nom_trajet' => 'Kenitra - Rabat', 'adresse' => 'Autoroute A1'],
-            ['nom_trajet' => 'Safi - Marrakech', 'adresse' => 'Route Régionale R207'],
-            ['nom_trajet' => 'El Jadida - Casablanca', 'adresse' => 'Route Côtière'],
-            ['nom_trajet' => 'Beni Mellal - Marrakech', 'adresse' => 'Route Nationale 8'],
-            ['nom_trajet' => 'Tanger - Casablanca', 'adresse' => 'Autoroute A1'],
-            ['nom_trajet' => 'Nador - Oujda', 'adresse' => 'Route Nationale 2'],
-            ['nom_trajet' => 'Khouribga - Casablanca', 'adresse' => 'Route Nationale 11'],
+            ['nom_trajet' => 'Ligne 101: Casablanca - Marrakech', 'description' => 'Trajet direct via autoroute'],
+            ['nom_trajet' => 'Ligne 102: Rabat - Fès', 'description' => 'Passage par Meknès'],
+            ['nom_trajet' => 'Ligne 103: Tanger - Tétouan', 'description' => 'Trajet côtier'],
+            ['nom_trajet' => 'Ligne 104: Agadir - Marrakech', 'description' => 'Route panoramique'],
+            ['nom_trajet' => 'Ligne 105: Casablanca - Rabat', 'description' => 'Liaison express'],
+            ['nom_trajet' => 'Ligne 106: Fès - Meknès', 'description' => 'Trajet direct'],
+            ['nom_trajet' => 'Ligne 107: Marrakech - Essaouira', 'description' => 'Route côtière'],
+            ['nom_trajet' => 'Ligne 108: Oujda - Fès', 'description' => 'Traversée du Moyen Atlas'],
+            ['nom_trajet' => 'Ligne 109: Kenitra - Rabat', 'description' => 'Liaison rapide'],
+            ['nom_trajet' => 'Ligne 110: Safi - Marrakech', 'description' => 'Route directe'],
         ];
 
         foreach ($routes as $route) {

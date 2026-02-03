@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('programmes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('bus_id')->constrained('bus')->onDelete('cascade');
-            $table->string('matricule', 50);
-            $table->integer('capacite');
+            $table->foreignId('route_id')->constrained('routes')->onDelete('cascade');
+            $table->date('date_depart');
+            $table->time('heure_depart');
+            $table->date('date_arrivee');
             $table->time('heure_arrivee');
-            $table->string('actif', 50);
-            $table->timestamps();
+            $table->enum('status', ['planifie', 'en_cours', 'termine', 'cancelled'])->default('planifie');
+            // $table->timestamps();
         });
     }
 

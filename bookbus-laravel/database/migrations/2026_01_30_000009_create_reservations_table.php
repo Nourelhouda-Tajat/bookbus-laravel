@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->date('date_reservation');
-            $table->string('status', 50);
+            $table->enum('status', ['confirme', 'pending', 'cancelled']);
             $table->integer('seat_number');
+            $table->decimal('prix', 8, 2);
+
             $table->foreignId('utilisateur_id')->constrained('utilisateurs')->onDelete('cascade');
-            $table->timestamps();
+            $table->foreignId('segment_id')->nullable()->constrained('segments')->onDelete('set null');
+            $table->foreignId('programme_id')->nullable()->constrained('programmes')->onDelete('set null');
+            // $table->timestamps();
         });
     }
 

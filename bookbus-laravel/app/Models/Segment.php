@@ -2,23 +2,40 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Segment extends Model
 {
+    use HasFactory;
+
     protected $table = 'segments';
-    protected $fillable = ['tarif', 'duree_estimee', 'distance_km'];
+    protected $fillable = ['depart_id',  
+        'arrivee_id',
+        'route_id',
+        'tarif',
+        'duree_estimee',
+        'distance_km'];
     public $timestamps = false;
-    public function programmes(){
-        return $this->belongsToMany(Programme::class);
+    public function route()
+    {
+        return $this->belongsTo(Route::class, 'route_id');
     }
-    public function utilisateurs(){
-        return $this->belongsToMany(Utilisateur::class);
+
+    public function etapeDepart()
+    {
+        return $this->belongsTo(Etape::class, 'depart_id');
     }
-    public function garesDepart(){
-        return $this->belongsToMany(Gare::class);
+
+    public function etapeArrivee()
+    {
+        return $this->belongsTo(Etape::class, 'arrivee_id');
     }
-    public function garesArrivee(){
-        return $this->belongsToMany(Gare::class);
+
+   
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'segment_id');
     }
+
 }

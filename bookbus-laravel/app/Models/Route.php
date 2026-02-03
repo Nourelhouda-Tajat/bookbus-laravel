@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Route extends Model
 {
+    use HasFactory;
+
     protected $table = 'routes';
     public $timestamps = false;
-    protected $fillable = ['nom_trajet', 'adresse'];
-    public function gares(){
-        return $this->belongsToMany(Gare::class);
+    protected $fillable = ['nom_trajet', 'description'];
+    public function segments(){
+        return $this->hasMany(Segment::class, 'route_id');
     }
     public function programmes(){
-        return $this->belongsToMany(Programme::class);
+        return $this->hasMany(Programme::class, 'route_id');
     }
     public function etapes(){
-        return $this->belongsToMany(Etape::class);
+        return $this->hasMany(Etape::class, 'route_id')->orderBy('ordre');
     }
 }

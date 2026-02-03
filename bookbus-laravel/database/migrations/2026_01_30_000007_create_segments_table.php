@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('segments', function (Blueprint $table) {
             $table->id();
-            $table->integer('tarif');
+            $table->foreignId('depart_id')->constrained('etapes')->onDelete('cascade');
+            $table->foreignId('arrive_id')->constrained('etapes')->onDelete('cascade');
+             $table->foreignId('route_id')->constrained('routes')->onDelete('cascade');
+            $table->decimal('tarif', 5, 2);
             $table->time('duree_estimee');
             $table->decimal('distance_km', 8, 2);
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 
