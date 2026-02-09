@@ -44,17 +44,17 @@
             <div class="flex justify-between items-center flex-wrap gap-4">
                 <div>
                     <h2 class="text-2xl font-bold mb-3 text-satas-brown">
-                        <i class="fas fa-map-marker-alt text-green-600"></i> <?php echo $villeDepart->nom_ville; ?>
+                        <i class="fas fa-map-marker-alt text-green-600"></i> {{ $villeDepart->nom_ville }}
                         <i class="fas fa-arrow-right mx-3 text-satas-orange"></i>
-                        <i class="fas fa-map-marker-alt text-red-600"></i> <?php echo $villeArrivee->nom_ville; ?>
+                        <i class="fas fa-map-marker-alt text-red-600"></i> {{ $villeArrivee->nom_ville }}
                     </h2>
                     <p class="text-satas-gray text-lg">
-                        <i class="fas fa-calendar text-satas-orange"></i> <?php echo date('d/m/Y', strtotime($dateDepart)); ?>
+                        <i class="fas fa-calendar text-satas-orange"></i> {{ \Carbon\Carbon::parse($dateDepart)->format('d/m/Y') }}
                         <span class="mx-3 text-satas-beige">|</span>
-                        <i class="fas fa-users text-satas-orange"></i> <?php echo $nombreVoyageurs; ?> <?php echo $nombreVoyageurs > 1 ? 'voyageurs' : 'voyageur'; ?>
+                        <i class="fas fa-users text-satas-orange"></i> {{ $nombreVoyageurs }} {{ $nombreVoyageurs > 1 ? 'voyageurs' : 'voyageur' }}
                     </p>
                 </div>
-                <a href="<?php echo route('search.index'); ?>" 
+                <a href="{{ route('search.index') }}" 
                    class="bg-satas-orange hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-semibold transition transform hover:scale-105 shadow-md">
                     <i class="fas fa-search"></i> Nouvelle recherche
                 </a>
@@ -62,37 +62,42 @@
         </div>
 
         <!-- Résultats -->
-        <?php if($trajets->count() > 0): ?>
+        @if(isset($trajets) && $trajets->count() > 0)
             <div class="mb-6 flex items-center">
                 <div class="bg-satas-orange text-white px-4 py-2 rounded-full font-bold">
-                    <?php echo $trajets->count(); ?> trajet(s)
+                    {{ $trajets->count() }} trajet(s)
                 </div>
                 <p class="ml-4 text-satas-gray">disponible(s)</p>
             </div>
 
-            <?php foreach($trajets as $trajet): ?>
+            @foreach($trajets as $resultat)
+                @php
+                    $trajet = $resultat['programme'];
+                @endphp
                 <div class="bg-white rounded-xl shadow-md hover:shadow-2xl p-6 mb-5 transition-all duration-300 border border-satas-beige hover:border-satas-orange">
                     <div class="flex justify-between items-center flex-wrap gap-4">
                         <!-- Heure départ -->
                         <div class="text-center">
                             <div class="bg-green-100 px-4 py-2 rounded-lg mb-2">
-                                <h4 class="text-2xl font-bold text-green-700"><?php echo $trajet->heure_depart; ?></h4>
+                                <h4 class="text-2xl font-bold text-green-700">{{ $trajet->heure_depart }}</h4>
                             </div>
                             <p class="text-satas-gray font-semibold">
                                 <i class="fas fa-arrow-up"></i> Départ
                             </p>
                         </div>
 
-                        <!-- Durée trajet -->
-                        <div class="text-center px-4">
-                            <i class="fas fa-arrow-right text-3xl text-satas-orange"></i>
-                            <p class="text-xs text-satas-gray mt-2">Trajet direct</p>
+                        <!-- Prix -->
+                        <div class="text-center">
+                            <div class="bg-satas-orange text-white px-6 py-3 rounded-lg">
+                                <h4 class="text-2xl font-bold">{{ $resultat['tarif'] }} MAD</h4>
+                            </div>
+                            <p class="text-satas-gray text-sm mt-1">Prix par personne</p>
                         </div>
 
                         <!-- Heure arrivée -->
                         <div class="text-center">
                             <div class="bg-red-100 px-4 py-2 rounded-lg mb-2">
-                                <h4 class="text-2xl font-bold text-red-700"><?php echo $trajet->heure_arrivee; ?></h4>
+                                <h4 class="text-2xl font-bold text-red-700">{{ $trajet->heure_arrivee }}</h4>
                             </div>
                             <p class="text-satas-gray font-semibold">
                                 <i class="fas fa-arrow-down"></i> Arrivée
@@ -102,24 +107,28 @@
                         <!-- Info bus -->
                         <div class="text-center bg-satas-beige bg-opacity-20 px-6 py-3 rounded-lg">
                             <h4 class="text-lg font-bold text-satas-brown">
-                                <i class="fas fa-bus text-satas-orange"></i> <?php echo $trajet->bus->matricule; ?>
+                                <i class="fas fa-bus text-satas-orange"></i> {{ $trajet->bus->matricule }}
                             </h4>
                             <p class="text-satas-gray">
-                                <i class="fas fa-chair"></i> <?php echo $trajet->bus->capacite; ?> places
+                                <i class="fas fa-chair"></i> {{ $trajet->bus->capacite }} places
                             </p>
                         </div>
 
                         <!-- Bouton réserver -->
                         <div>
-                            <a href="#" 
+                            <a href="{{ route('booking.create', [
+    'programme_id' => $trajet->id,
+    'segment_id' => $resultat['segment']->id,
+    'nombre_voyageurs' => $nombreVoyageurs
+]) }}" 
                                class="bg-gradient-to-r from-satas-orange to-amber-600 hover:from-amber-600 hover:to-satas-orange text-white px-8 py-4 rounded-lg font-bold transition transform hover:scale-105 shadow-lg inline-block">
                                 <i class="fas fa-ticket-alt"></i> Réserver
                             </a>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
-        <?php else: ?>
+            @endforeach
+        @else
             <div class="bg-amber-50 border-l-4 border-amber-500 text-amber-800 p-8 rounded-lg shadow-md">
                 <div class="flex items-center mb-4">
                     <i class="fas fa-exclamation-triangle text-4xl text-amber-600 mr-4"></i>
@@ -127,12 +136,12 @@
                 </div>
                 <p class="text-lg">Désolé, aucun trajet SATAS n'est disponible pour cette recherche.</p>
                 <p class="mt-2 text-satas-gray">🐪 Essayez une autre date ou un autre trajet.</p>
-                <a href="<?php echo route('search.index'); ?>" 
+                <a href="{{ route('search.index') }}" 
                    class="mt-4 inline-block bg-satas-orange text-white px-6 py-3 rounded-lg hover:bg-amber-600 transition">
                     <i class="fas fa-search"></i> Modifier la recherche
                 </a>
             </div>
-        <?php endif; ?>
+        @endif
     </div>
 
     <!-- Footer -->

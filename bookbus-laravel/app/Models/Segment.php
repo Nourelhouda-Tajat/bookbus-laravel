@@ -11,7 +11,7 @@ class Segment extends Model
 
     protected $table = 'segments';
     protected $fillable = ['depart_id',  
-        'arrivee_id',
+        'arrive_id',
         'route_id',
         'tarif',
         'duree_estimee',
@@ -29,7 +29,7 @@ class Segment extends Model
 
     public function etapeArrivee()
     {
-        return $this->belongsTo(Etape::class, 'arrivee_id');
+        return $this->belongsTo(Etape::class, 'arrive_id');
     }
 
    

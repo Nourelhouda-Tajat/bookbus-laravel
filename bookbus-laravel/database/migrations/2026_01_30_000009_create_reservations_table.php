@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('seat_number');
             $table->decimal('prix', 8, 2);
 
-            $table->foreignId('utilisateur_id')->constrained('utilisateurs')->onDelete('cascade');
+            $table->foreignId('utilisateur_id')->nullable()->constrained('utilisateurs');
             $table->foreignId('segment_id')->nullable()->constrained('segments')->onDelete('set null');
             $table->foreignId('programme_id')->nullable()->constrained('programmes')->onDelete('set null');
             // $table->timestamps();

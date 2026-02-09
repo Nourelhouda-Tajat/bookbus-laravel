@@ -39,19 +39,19 @@
         </div>
 
         <!-- Messages d'erreur -->
-        <?php if ($errors->any()): ?>
+        @if ($errors->any())
             <div class="bg-red-100 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded mb-6">
                 <p class="font-bold"><i class="fas fa-exclamation-triangle"></i> Erreurs :</p>
                 <ul class="list-disc list-inside mt-2">
-                    <?php foreach ($errors->all() as $error): ?>
-                        <li><?php echo $error; ?></li>
-                    <?php endforeach; ?>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
                 </ul>
             </div>
-        <?php endif; ?>
+        @endif
 
         <!-- Formulaire -->
-        <form action="<?php echo route('search.results'); ?>" method="GET" id="searchForm">
+        <form action="{{ route('search.results') }}" method="GET" id="searchForm">
             
             <!-- Ville de départ -->
             <div class="mb-6">
@@ -62,11 +62,9 @@
                         class="w-full px-4 py-3 border-2 border-satas-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-satas-orange focus:border-satas-orange transition" 
                         required>
                     <option value="">-- Choisissez une ville --</option>
-                    <?php foreach($villes as $ville): ?>
-                        <option value="<?php echo $ville->id; ?>">
-                            <?php echo $ville->nom_ville; ?>
-                        </option>
-                    <?php endforeach; ?>
+                    @foreach($villes as $ville)
+                        <option value="{{ $ville->id }}">{{ $ville->nom_ville }}</option>
+                    @endforeach
                 </select>
             </div>
 
@@ -79,11 +77,9 @@
                         class="w-full px-4 py-3 border-2 border-satas-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-satas-orange focus:border-satas-orange transition" 
                         required>
                     <option value="">-- Choisissez une destination --</option>
-                    <?php foreach($villes as $ville): ?>
-                        <option value="<?php echo $ville->id; ?>">
-                            <?php echo $ville->nom_ville; ?>
-                        </option>
-                    <?php endforeach; ?>
+                    @foreach($villes as $ville)
+                        <option value="{{ $ville->id }}">{{ $ville->nom_ville }}</option>
+                    @endforeach
                 </select>
                 <p id="error-same-city" class="text-red-600 text-sm mt-2 hidden font-semibold">
                     <i class="fas fa-exclamation-circle"></i> La ville d'arrivée doit être différente
@@ -98,8 +94,8 @@
                 <input type="date" 
                        name="date_depart" 
                        id="date_depart" 
-                       min="<?php echo date('Y-m-d'); ?>"
-                       value="<?php echo date('Y-m-d'); ?>"
+                       min="{{ date('Y-m-d') }}"
+                       value="{{ date('Y-m-d') }}"
                        class="w-full px-4 py-3 border-2 border-satas-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-satas-orange focus:border-satas-orange transition" 
                        required>
             </div>
@@ -112,19 +108,27 @@
                 <select name="nombre_voyageurs" 
                         class="w-full px-4 py-3 border-2 border-satas-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-satas-orange focus:border-satas-orange transition" 
                         required>
-                    <?php for($i = 1; $i <= 10; $i++): ?>
-                        <option value="<?php echo $i; ?>">
-                            <?php echo $i; ?> <?php echo $i > 1 ? 'voyageurs' : 'voyageur'; ?>
-                        </option>
-                    <?php endfor; ?>
+                    @for($i = 1; $i <= 10; $i++)
+                        <option value="{{ $i }}">{{ $i }} {{ $i > 1 ? 'voyageurs' : 'voyageur' }}</option>
+                    @endfor
                 </select>
             </div>
 
             <!-- Bouton recherche -->
             <button type="submit" 
+                    id="btnSearch"
+                    class="w-full bg-gradient-to-r from-satas-orange to-amber-600 text-white font-bold py-4 rounded-lg hover:from-amber-600 hover:to-satas-orange transition transform hover:scale-105 shadow-lg">
+                <span id="btnText">
+                    <i class="fas fa-search"></i> Rechercher des trajets
+                </span>
+                <span id="btnLoading" class="hidden">
+                    <i class="fas fa-spinner fa-spin"></i> Recherche en cours...
+                </span>
+            </button>
+            <!-- <button type="submit" 
                     class="w-full bg-gradient-to-r from-satas-orange to-amber-600 text-white font-bold py-4 rounded-lg hover:from-amber-600 hover:to-satas-orange transition transform hover:scale-105 shadow-lg">
                 <i class="fas fa-search"></i> Rechercher des trajets
-            </button>
+            </button> -->
         </form>
 
         <!-- Avantages SATAS -->
@@ -178,7 +182,10 @@
 
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             if (!checkSameCity()) {
-                e.preventDefault();
+                document.getElementById('btnText').classList.add('hidden');
+                document.getElementById('btnLoading').classList.remove('hidden');
+                document.getElementById('btnSearch').disabled = true;
+                // e.preventDefault();
             }
         });
     </script>

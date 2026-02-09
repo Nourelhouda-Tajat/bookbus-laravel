@@ -29,8 +29,8 @@ class ProgrammeSeeder extends Seeder
         Programme::create([
             'bus_id' => 1,
             'route_id' => 1,
-            'date_depart' => '2026-02-02',
-            'date_arrivee' => '2026-02-02',
+            'date_depart' => '2026-02-09',
+            'date_arrivee' => '2026-02-09',
             'heure_depart' => '08:00:00',
             'heure_arrivee' => '11:30:00',
             'status' => 'planifie'
